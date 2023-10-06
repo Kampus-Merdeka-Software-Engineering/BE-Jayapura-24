@@ -31,7 +31,6 @@ app.post('/comment', async (req, res) => {
             status: 200,
         });
     }catch (error) {
-        console.log(error)
         return res.status(500).send({
             message: 'Gagal menyimpan data',
         });
