@@ -1,12 +1,14 @@
 const express = require('express');
 const app = express();
-const PORT = 3000;
+const PORT = process.env.PORT||3000;
 const bodyParser = require('body-parser');
 const {Comment} = require('./models');
+const cors = require('cors')
 
 app.use(bodyParser.urlencoded({ extended: true}));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true}));
+app.use(cors({origin:"*"}))
 
 //menyimpan data
 app.post('/comment', async (req, res) => {
