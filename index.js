@@ -41,9 +41,18 @@ app.post('/comment', async (req, res) => {
 app.get('/comment', async (req, res) => {
     try {
         const results = await Comment.findAll();
+        const arr = results.map((result) => ({
+            id: result.id,
+            parent: result.parent == 0 ? null : parseInt(result.parent),
+            username: result.username,
+            content: result.content,
+            image: result.image,
+            score: result.score,
+        }))
+        const items = getNestedChildren(arr);
         return res.send({
             messsage: 'Berhasil menampulkan data',
-            data: results,
+            results: items,
         });
     } catch (error) {
         return res.status(500).send({
@@ -73,3 +82,18 @@ app.delete('/comment/:id_comment', async (req, res) => {
 app.listen(PORT, () => {
     console.log(`Server running on localhost:${PORT}`);
 });
+
+function getNestedChildren(arr, parent) {
+    const out = [];
+    for (const i in arr) {
+        if (arr[i].parent === parent) {
+            const children = getNestedChildren(arr, arr[i].id);
+
+            if (children.length) {
+                arr[i].replies = children;
+            }
+            out.push(arr[i]);
+        }
+    }
+    return out;
+}
