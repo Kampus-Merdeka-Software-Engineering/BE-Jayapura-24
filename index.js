@@ -86,7 +86,7 @@ app.listen(PORT, () => {
 function getNestedChildren(arr, parent) {
     const out = [];
     for (const i in arr) {
-        if (arr[i].parent === parent) {
+        if (arr[i].parent == parent) {
             const children = getNestedChildren(arr, arr[i].id);
 
             if (children.length) {
