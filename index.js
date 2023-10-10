@@ -51,7 +51,7 @@ app.get('/comment', async (req, res) => {
         }))
         const items = getNestedChildren(arr);
         return res.send({
-            messsage: 'Berhasil menampulkan data',
+            messsage: 'Berhasil menampilkan data',
             results: items,
         });
     } catch (error) {
